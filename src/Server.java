@@ -8,6 +8,8 @@ public class Server  {
         while (true) {
             Socket client = ss.accept();
             new Thread(new ClientHandler(client)).start();
+
+            int test = 0;
         }
     }
 }
