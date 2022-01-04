@@ -9,7 +9,7 @@ public class Server  {
             Socket client = ss.accept();
             new Thread(new ClientHandler(client)).start();
 
-            int test = 0;
+            int test = 1;
         }
     }
 }
