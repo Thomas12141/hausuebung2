@@ -41,6 +41,8 @@ public class GUI implements ActionListener{
     }
 
     void createGUI(){
+        client = new Client();
+
         JFrame frame = new JFrame();
         frame.setSize(650, 500);
 
@@ -113,12 +115,51 @@ public class GUI implements ActionListener{
         //frame.pack();
         frame.setVisible(true);
 
+
+        /*
+         Button ActionListener
+        */
+        btnConnect.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                client.Connect();
+            }
+        });
+
+        btnDelete.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                client.Delete();
+            }
+        });
+
+        btnUpload.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                client.Upload();
+            }
+        });
+
+        btnLst.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                client.Lst();
+            }
+        });
+
+        btnDownload.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                client.Download();
+            }
+        });
+
+        btnDisconnect.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                client.Disconnect();
+            }
+        });
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        /*
-         Senden von Nachrichten nach klicken eines Buttons
-        */
-    }
 }
