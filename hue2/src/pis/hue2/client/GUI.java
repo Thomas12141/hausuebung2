@@ -163,7 +163,9 @@ public class GUI implements ActionListener{
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    client.Disconnect();
+                    if(client.Disconnect()){
+                        JLabel connection = new JLabel("The connection is disconnected");
+                    }
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
