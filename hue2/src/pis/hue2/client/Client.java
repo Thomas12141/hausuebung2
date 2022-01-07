@@ -37,4 +37,15 @@ public class Client {
         client.close();
         return true;
     }
+
+    public boolean Delete(){
+        out.println(Instruction.DEL);
+        String fileToDelete;
+        out.println(fileToDelete);
+        String temp = in.readLine();
+        if(Instruction.ifDEL(temp))
+        {
+            
+        }
+    }
 }

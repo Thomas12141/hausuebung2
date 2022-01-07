@@ -11,4 +11,8 @@ public enum Instruction {
     public static boolean ifDSC(String temp){
         return DSC.equals(temp);
     }
+
+    public static boolean ifDEL(String temp){
+        return DEL.equals(temp);
+    }
 }

@@ -7,7 +7,7 @@ import java.io.IOException;
 import javax.swing.*;
 
 
-public class GUI implements ActionListener{
+public class GUI{
 
     /*
      Um Nachrichten anzuzeigen
@@ -22,7 +22,7 @@ public class GUI implements ActionListener{
     /*
      Buttons zum Connection, Datei löschen, Disconnecten, Datei Download, anzeigen der Order und Datei Hochladen
     */
-    private JButton btnConnect, btnDelete, btnDisconnect, btnDownload,btnLst,btnUpload;
+    private JButton btnConnect, btnDelete, btnDisconnect, btnDownload, btnLst, btnUpload;
 
     private boolean connected;
 
@@ -35,13 +35,13 @@ public class GUI implements ActionListener{
     /*
      Konstruktor
     */
-    GUI(String host, int port){
+    GUI(String host, int port) {
         defaultHost = host;
         defaultPort = port;
         createGUI();
     }
 
-    void createGUI(){
+    void createGUI() {
         client = new Client();
 
         JFrame frame = new JFrame();
@@ -51,7 +51,7 @@ public class GUI implements ActionListener{
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setLayout(new BorderLayout());
 
-        JPanel panel = new JPanel(new GridLayout(3,1));
+        JPanel panel = new JPanel(new GridLayout(3, 1));
         panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
         panel.setVisible(true);
 
@@ -101,7 +101,7 @@ public class GUI implements ActionListener{
          Visibility
         */
         frame.add(btnPanel, BorderLayout.SOUTH);
-        frame.add(serverPortPanel,BorderLayout.NORTH);
+        frame.add(serverPortPanel, BorderLayout.NORTH);
         btnConnect.setVisible(true);
         btnDelete.setVisible(true);
         btnDisconnect.setVisible(true);
@@ -120,7 +120,7 @@ public class GUI implements ActionListener{
         /*
          Button ActionListener
         */
-        btnConnect.addActionListener(new ActionListener(){
+        btnConnect.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
@@ -130,7 +130,7 @@ public class GUI implements ActionListener{
                 }
             }
         });
-
+        /*
         btnDelete.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -171,6 +171,7 @@ public class GUI implements ActionListener{
                 }
             }
         });
-    }
 
+         */
+    }
 }
