@@ -18,7 +18,7 @@ public class Client {
         in = new BufferedReader(new InputStreamReader(client.getInputStream()));
         out = new PrintWriter(client.getOutputStream());
         out.println("CON");
-        /*
+        out.flush();
         String temp = in.readLine();
         if(Instruction.ifACK(temp)){
             return true;
@@ -29,8 +29,7 @@ public class Client {
             out.close();
             return false;
         }
-         */
-        return false;
+
     }
 
     public boolean Disconnect() throws IOException{

@@ -5,7 +5,7 @@ public enum Instruction {
 
     public static boolean ifACK(String temp)
     {
-        return ACK.equals(temp);
+        return "ACK".equals(temp);
     }
 
     public static boolean ifDSC(String temp){

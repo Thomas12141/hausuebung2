@@ -19,8 +19,11 @@ public class ClientHandler implements Runnable{
             if(Instruction.ifCON(temp)) {
                 if (counter < 3) {
                     out.println(Instruction.ACK);
+                    out.flush();
+                    counter++;
                 } else {
                     out.println(Instruction.DND);
+                    out.flush();
                 }
             }
         } catch (IOException e) {

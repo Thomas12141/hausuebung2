@@ -17,6 +17,6 @@ public enum Instruction {
     }
 
     public static boolean ifCON(String temp){
-        return CON.equals(temp);
+        return "CON".equals(temp);
     }
 }

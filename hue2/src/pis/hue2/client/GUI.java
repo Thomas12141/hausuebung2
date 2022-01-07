@@ -124,8 +124,9 @@ public class GUI{
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    client.Connect();
-                    JOptionPane.showMessageDialog(frame, "Mit 127.0.0.1 verbunden.");
+                    if(client.Connect()) {
+                        JOptionPane.showMessageDialog(frame, "Mit 127.0.0.1 verbunden.");
+                    }
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
                 }
