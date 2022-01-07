@@ -33,6 +33,7 @@ public class Client {
 
     }
     public boolean Disconnect() throws IOException{
+        client.close();
         out.println(Instruction.DSC);
         return true;
     }
