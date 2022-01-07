@@ -17,8 +17,8 @@ public class Client {
         client = new Socket(IP, PORT);
         in = new BufferedReader(new InputStreamReader(client.getInputStream()));
         out = new PrintWriter(client.getOutputStream());
+        out.println("CON");
         /*
-        out.println(Instruction.CON);
         String temp = in.readLine();
         if(Instruction.ifACK(temp)){
             return true;
@@ -29,7 +29,6 @@ public class Client {
             out.close();
             return false;
         }
-
          */
         return false;
     }
@@ -47,7 +46,7 @@ public class Client {
         String temp = in.readLine();
         if(Instruction.ifDEL(temp))
         {
-            
+
         }
     }
 
