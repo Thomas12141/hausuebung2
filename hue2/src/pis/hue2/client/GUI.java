@@ -1,10 +1,12 @@
 package pis.hue2.client;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.*;
 
 
-public class GUI extends JFrame{
+public class GUI implements ActionListener{
 
     /*
      Um Nachrichten anzuzeigen
@@ -25,9 +27,9 @@ public class GUI extends JFrame{
 
     private Client client;
 
-    private int defaultPort;
+    public int defaultPort;
 
-    private String defaultHost;
+    public String defaultHost;
 
     /*
      Konstruktor
@@ -35,23 +37,39 @@ public class GUI extends JFrame{
     GUI(String host, int port){
         defaultHost = host;
         defaultPort = port;
-
-        /*
-         Textfelder für Default Werte
-        */
-        tfServer = new JTextField(host);
-        tfPort = new JTextField("" + port);
-        tfPort.setHorizontalAlignment(SwingConstants.RIGHT);
         createGUI();
     }
 
     void createGUI(){
         JFrame frame = new JFrame();
+        frame.setSize(650, 500);
+
         frame.setTitle("Datatransfer");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setLayout(new BorderLayout());
 
         JPanel panel = new JPanel(new GridLayout(3,1));
+        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+        panel.setVisible(true);
+
+        /*
+         Textfelder für Default Werte
+        */
+        JPanel serverPortPanel = new JPanel();
+
+        serverPortPanel.setLayout(new BoxLayout(serverPortPanel, BoxLayout.X_AXIS));
+        tfServer = new JTextField(defaultHost);
+        tfPort = new JTextField("" + defaultPort);
+        tfPort.setHorizontalAlignment(SwingConstants.LEFT);
+        tfPort.setEditable(false);
+        tfServer.setEditable(false);
+
+
+        serverPortPanel.add(new JLabel("Host:  "));
+        serverPortPanel.add(tfServer);
+        serverPortPanel.add(new JLabel("Port:  "));
+        serverPortPanel.add(tfPort);
+        panel.add(serverPortPanel);
 
         /*
         Buttons Connect, Delete, Disconnect, Download, List, Upload
@@ -74,6 +92,33 @@ public class GUI extends JFrame{
 
         btnUpload = new JButton("Upload Data");
         btnPanel.add(btnUpload);
+
+
+        /*
+         Visibility
+        */
+        frame.add(btnPanel, BorderLayout.SOUTH);
+        frame.add(serverPortPanel,BorderLayout.NORTH);
+        btnConnect.setVisible(true);
+        btnDelete.setVisible(true);
+        btnDisconnect.setVisible(true);
+        btnDownload.setVisible(true);
+        btnLst.setVisible(true);
+        btnUpload.setVisible(true);
+        btnPanel.setVisible(true);
+        tfServer.setVisible(true);
+        tfPort.setVisible(true);
+
+        serverPortPanel.setVisible(true);
+        //frame.pack();
+        frame.setVisible(true);
+
     }
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        /*
+         Senden von Nachrichten nach klicken eines Buttons
+        */
+    }
 }

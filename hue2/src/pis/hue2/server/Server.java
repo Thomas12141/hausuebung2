@@ -1,7 +1,5 @@
 package pis.hue2.server;
 
-import pis.hue2.server.ClientHandler;
-
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
