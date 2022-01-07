@@ -17,6 +17,7 @@ public class Client {
         client = new Socket(IP, PORT);
         in = new BufferedReader(new InputStreamReader(client.getInputStream()));
         out = new PrintWriter(client.getOutputStream());
+        /*
         out.println(Instruction.CON);
         String temp = in.readLine();
         if(Instruction.ifACK(temp)){
@@ -28,16 +29,17 @@ public class Client {
             out.close();
             return false;
         }
-    }
-    {
 
+         */
+        return false;
     }
+
     public boolean Disconnect() throws IOException{
         out.println(Instruction.DSC);
         client.close();
         return true;
     }
-
+/*
     public boolean Delete(){
         out.println(Instruction.DEL);
         String fileToDelete;
@@ -48,4 +50,6 @@ public class Client {
             
         }
     }
+
+ */
 }

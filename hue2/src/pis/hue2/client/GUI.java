@@ -125,46 +125,70 @@ public class GUI{
             public void actionPerformed(ActionEvent e) {
                 try {
                     client.Connect();
+                    JOptionPane.showMessageDialog(frame, "Mit 127.0.0.1 verbunden.");
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
                 }
             }
         });
+
         /*
         btnDelete.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                client.Delete();
+                try {
+                    client.Delete();
+                    JOptionPane.showMessageDialog(frame, "Datei wurde gelöscht");
+                } catch (IOException ioException){
+                    ioException.printStackTrace();
+                }
             }
         });
 
         btnUpload.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                client.Upload();
+                try {
+                    client.Upload();
+                    JOptionPane.showMessageDialog(frame, "Datei wurde hochgeladen");
+                } catch (IOException ioException){
+                    ioException.printStackTrace();
+                }
             }
         });
 
         btnLst.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                client.Lst();
+                try {
+                    client.Lst();
+                } catch (IOException ioException){
+                    ioException.printStackTrace();
+                }
             }
         });
 
         btnDownload.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                client.Download();
+                try {
+                    client.Download();
+                    JOptionPane.showMessageDialog(frame, "Datei wurde heruntergeladen");
+                } catch (IOException ioException){
+                    ioException.printStackTrace();
+                }
             }
         });
+
+         */
+
 
         btnDisconnect.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
                     if(client.Disconnect()){
-                        JLabel connection = new JLabel("The connection is disconnected");
+                        JOptionPane.showMessageDialog(frame, "Verbindung wurde getrennt");
                     }
                 } catch (IOException ex) {
                     ex.printStackTrace();
@@ -172,6 +196,6 @@ public class GUI{
             }
         });
 
-         */
+
     }
 }
