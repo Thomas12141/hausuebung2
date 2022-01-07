@@ -162,7 +162,11 @@ public class GUI implements ActionListener{
         btnDisconnect.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                client.Disconnect();
+                try {
+                    client.Disconnect();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
             }
         });
     }

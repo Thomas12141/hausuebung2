@@ -9,11 +9,14 @@ import java.net.Socket;
 public class Client {
     private static final String IP = "127.0.0.1";
     private static final int PORT = 8080;
+    private static BufferedReader in;
+    private static PrintWriter out;
+    private static Socket client;
 
     public boolean Connect() throws IOException {
-        Socket client = new Socket(IP, PORT);
-        BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-        PrintWriter out = new PrintWriter(client.getOutputStream());
+        client = new Socket(IP, PORT);
+        in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+        out = new PrintWriter(client.getOutputStream());
         out.println(Instruction.CON);
         String temp = in.readLine();
         if(Instruction.ifACK(temp)){
@@ -25,5 +28,12 @@ public class Client {
             out.close();
             return false;
         }
+    }
+    {
+
+    }
+    public boolean Disconnect() throws IOException{
+        out.println(Instruction.DSC);
+        return true;
     }
 }
