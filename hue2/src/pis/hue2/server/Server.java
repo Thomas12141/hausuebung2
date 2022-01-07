@@ -1,3 +1,7 @@
+package pis.hue2.server;
+
+import pis.hue2.server.ClientHandler;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -9,7 +13,6 @@ public class Server  {
             Socket client = ss.accept();
             new Thread(new ClientHandler(client)).start();
 
-            int test = 1;
         }
     }
 }

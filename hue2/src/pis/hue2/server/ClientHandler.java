@@ -1,3 +1,5 @@
+package pis.hue2.server;
+
 import java.io.*;
 import java.net.Socket;
 public class ClientHandler implements Runnable{
