@@ -103,11 +103,11 @@ public class GUI{
         frame.add(btnPanel, BorderLayout.SOUTH);
         frame.add(serverPortPanel, BorderLayout.NORTH);
         btnConnect.setVisible(true);
-        btnDelete.setVisible(true);
-        btnDisconnect.setVisible(true);
-        btnDownload.setVisible(true);
-        btnLst.setVisible(true);
-        btnUpload.setVisible(true);
+        btnDelete.setVisible(false);
+        btnDisconnect.setVisible(false);
+        btnDownload.setVisible(false);
+        btnLst.setVisible(false);
+        btnUpload.setVisible(false);
         btnPanel.setVisible(true);
         tfServer.setVisible(true);
         tfPort.setVisible(true);
@@ -126,6 +126,14 @@ public class GUI{
                 try {
                     if(client.Connect()) {
                         JOptionPane.showMessageDialog(frame, "Mit 127.0.0.1 verbunden.");
+
+                        btnDisconnect.setVisible(true);
+                        btnConnect.setVisible(false);
+                        btnDelete.setVisible(true);
+                        btnDisconnect.setVisible(true);
+                        btnDownload.setVisible(true);
+                        btnLst.setVisible(true);
+                        btnUpload.setVisible(true);
                     }
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
@@ -190,6 +198,13 @@ public class GUI{
                 try {
                     if(client.Disconnect()){
                         JOptionPane.showMessageDialog(frame, "Verbindung wurde getrennt");
+                        btnConnect.setVisible(true);
+                        btnDisconnect.setVisible(false);
+                        btnDelete.setVisible(false);
+                        btnDisconnect.setVisible(false);
+                        btnDownload.setVisible(false);
+                        btnLst.setVisible(false);
+                        btnUpload.setVisible(false);
                     }
                 } catch (IOException ex) {
                     ex.printStackTrace();
