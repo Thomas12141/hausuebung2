@@ -5,10 +5,24 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
+/**
+ * LaunchServer dient zum Starten des Servers
+ * @author Thomas Fidorin, Fabian Woyda
+ */
+
 public class LaunchServer {
 
+    /**
+     * Für die gesendeten Files vom LaunchClient
+     * @see pis.hue2.client.LaunchClient
+     */
     static ArrayList<MyFile> myFiles = new ArrayList<>();
 
+    /**
+     * Main Klasse zum Starten des Servers
+     * @param args
+     * @throws IOException
+     */
     public static void main(String[] args) throws IOException {
         ServerSocket ss = new ServerSocket(8080);
         while (true) {
