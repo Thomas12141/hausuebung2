@@ -1,5 +1,6 @@
 package pis.hue2.client;
 
+import pis.hue2.server.MyFile;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -159,16 +160,19 @@ public class GUI{
         btnUpload.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try {
-                    JFileChooser jFileChooser = new JFileChooser();
-                    jFileChooser.setDialogTitle("Choose a file to upload");
-                    jFileChooser.showOpenDialog(null);
-                    File file = jFileChooser.getSelectedFile();
-                    if(client.Upload(file))
-                        JOptionPane.showMessageDialog(frame, "Datei wurde hochgeladen");
-                } catch (IOException ioException){
-                    ioException.printStackTrace();
-                }
+                new SwingWorker() {
+                    @Override
+                    protected Object doInBackground() throws Exception {
+                        JFileChooser jFileChooser = new JFileChooser();
+                        jFileChooser.setDialogTitle("Choose a file to upload");
+                        jFileChooser.showOpenDialog(null);
+                        File file = jFileChooser.getSelectedFile();
+                        if (client.Upload(file))
+                            JOptionPane.showMessageDialog(frame, "Datei wurde hochgeladen");
+                        return null;
+                    }
+                }.execute();
+
             }
         });
         /*

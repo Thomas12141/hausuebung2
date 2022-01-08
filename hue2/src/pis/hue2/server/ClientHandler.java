@@ -30,10 +30,38 @@ public class ClientHandler implements Runnable{
                 if (Instruction.ifPUT(temp)) {
                     out.println(Instruction.ACK);
                     out.flush();
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            DataInputStream dataInputStream = new DataInputStream(client.getInputStream());
+
+                            int fileNameLength = dataInputStream.readInt();
+
+                            if(fileNameLength>0){
+                                byte[] fileNameBytes = new byte[fileNameLength];
+                                dataInputStream.readFully(fileNameBytes, 0, fileNameBytes.length);
+                                String fileName = new String(fileNameBytes);
+
+                                int fileContentLength = dataInputStream.readInt();
+
+                                if(fileContentLength>0){
+                                    byte[] fileContentBytes = new byte[fileContentLength];
+                                    dataInputStream.readFully(fileContentBytes, 0, fileContentLength);
+                                }
+                            }
+                        }
+                    }).start();
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static String getFileExtension(String fileName){
+        int i = fileName.lastIndexOf('.');
+        if(i>0)
+            return fileName.substring(i+1);
+        return "";
     }
 }

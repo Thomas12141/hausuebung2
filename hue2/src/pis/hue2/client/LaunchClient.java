@@ -1,10 +1,14 @@
 package pis.hue2.client;
+
+import javax.swing.*;
+
 public class LaunchClient {
     public static void main(String[] args) {
-        GUI g = new GUI("GG",8080);
-        /*GUI c = new GUI("GG",8080);
-        GUI b = new GUI("GG",8080);
-        GUI a = new GUI("GG",8080);
-         */
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                GUI g = new GUI("127.0.0.1",8080);
+            }
+        });
     }
 }
