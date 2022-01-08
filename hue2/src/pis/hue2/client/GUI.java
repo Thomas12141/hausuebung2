@@ -43,6 +43,9 @@ public class GUI{
         createGUI();
     }
 
+    /*
+     Erstellung des Designs
+    */
     void createGUI() {
         client = new Client();
 
@@ -61,15 +64,12 @@ public class GUI{
          Textfelder für Default Werte
         */
         JPanel serverPortPanel = new JPanel();
-
         serverPortPanel.setLayout(new BoxLayout(serverPortPanel, BoxLayout.X_AXIS));
         tfServer = new JTextField(defaultHost);
         tfPort = new JTextField("" + defaultPort);
         tfPort.setHorizontalAlignment(SwingConstants.LEFT);
         tfPort.setEditable(false);
         tfServer.setEditable(false);
-
-
         serverPortPanel.add(new JLabel("Host:  "));
         serverPortPanel.add(tfServer);
         serverPortPanel.add(new JLabel("Port:  "));
@@ -100,7 +100,9 @@ public class GUI{
 
 
         /*
-         Visibility
+         Visibility bei Buttons auf False, damit man sich erst "connecten" muss, bevor man Dateien löschen, anzeigen, hochladen oder herunterladen kann
+         Bei einem "Connect" verschwindet der "Connect" Button und alle anderen Button inkl. "Disconnect" erscheinen.
+         Wird "Disconnected" geklickt, ist es genau umgekehrt
         */
         frame.add(btnPanel, BorderLayout.SOUTH);
         frame.add(serverPortPanel, BorderLayout.NORTH);
@@ -120,7 +122,10 @@ public class GUI{
 
 
         /*
-         Button ActionListener
+         "Connect" Button
+         Es wird geprüft, ob eine Verbindung zum Client besteht. Ist dies der Fall öffnet sich ein PopUp Fenster mit der Bestätigung.
+         Alle anderen werden Visible und der "Connect" Button verschwindet, damit man sich nicht mehrmals verbindet.
+         Sollte die Verbindung nicht gelingen, bekommen wir eine Fehlermeldung in der Konsole angezeigt.
         */
         btnConnect.addActionListener(new ActionListener() {
             @Override
@@ -157,6 +162,11 @@ public class GUI{
         });
         */
 
+        /*
+         Bei einem Klick auf den Upload Button wird ein neuer SwingWorker erstellt, bei dem sich ein neues Fenster öffnet, in dem man sich die hochzuladende Datei
+         aussuchen kann. Diese Dateien werden in der Klasse MyFile verarbeitet.
+         Auch wird überprüft ob die Datei beim Client Server angekommen ist. Ist dies der Fall, öffnet sich ein PopUp Fenster mit der Bestätigung
+        */
         btnUpload.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -175,6 +185,7 @@ public class GUI{
 
             }
         });
+
         /*
         btnLst.addActionListener(new ActionListener() {
             @Override
@@ -198,10 +209,15 @@ public class GUI{
                 }
             }
         });
-
          */
 
-
+        /*
+         "Disconnect" Button
+         Es wird geprüft, ob der Befehl beim Server angekommen ist. Ist dies der Fall öffnet sich ein PopUp Fenster mit der Bestätigung, dass die Verbindung
+         getrennt wurde.
+         Alle anderen werden Button verschwinden und der "Connect" Button wird Visible, damit man sich wieder verbinden kann.
+         Sollte der "Disconnect" nicht gelingen, bekommen wir eine Fehlermeldung in der Konsole angezeigt.
+        */
         btnDisconnect.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
