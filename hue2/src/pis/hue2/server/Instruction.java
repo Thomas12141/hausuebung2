@@ -19,4 +19,8 @@ public enum Instruction {
     public static boolean ifCON(String temp){
         return "CON".equals(temp);
     }
+
+    public static boolean ifPUT(String temp){
+        return "PUT".equals(temp);
+    }
 }

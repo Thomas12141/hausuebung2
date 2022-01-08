@@ -1,10 +1,8 @@
 package pis.hue2.client;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
 
 public class Client {
     private static final String IP = "127.0.0.1";
@@ -33,7 +31,7 @@ public class Client {
     }
 
     public boolean Disconnect() throws IOException{
-        out.println(Instruction.DSC);
+        out.println("DSC");
         client.close();
         return true;
     }
@@ -50,4 +48,24 @@ public class Client {
     }
 
  */
+    public boolean Upload(File file) throws IOException {
+        out.println("PUT");
+        out.flush();
+        String temp = in.readLine();
+        if(Instruction.ifACK(temp)){
+            DataOutputStream dataOutputStream = new DataOutputStream(client.getOutputStream());
+            String fileName = file.getName();
+            byte[] fileNameBytes = fileName.getBytes();
+            byte[] fileContentBytes = new byte[(int) file.length()];
+            dataOutputStream.write(fileNameBytes.length);
+            dataOutputStream.write(fileNameBytes);
+            dataOutputStream.write(fileContentBytes.length);
+            dataOutputStream.write(fileContentBytes);
+            dataOutputStream.close();
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 }

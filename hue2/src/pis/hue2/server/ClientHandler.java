@@ -15,14 +15,20 @@ public class ClientHandler implements Runnable{
     @Override
     public void run() {
         try {
-            String temp = in.readLine();
-            if(Instruction.ifCON(temp)) {
-                if (counter < 3) {
+            while (true) {
+                String temp = in.readLine();
+                if (Instruction.ifCON(temp)) {
+                    if (counter < 3) {
+                        out.println(Instruction.ACK);
+                        out.flush();
+                        counter++;
+                    } else {
+                        out.println(Instruction.DND);
+                        out.flush();
+                    }
+                }
+                if (Instruction.ifPUT(temp)) {
                     out.println(Instruction.ACK);
-                    out.flush();
-                    counter++;
-                } else {
-                    out.println(Instruction.DND);
                     out.flush();
                 }
             }

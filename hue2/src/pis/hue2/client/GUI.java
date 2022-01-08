@@ -3,6 +3,7 @@ package pis.hue2.client;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 import javax.swing.*;
 
@@ -153,19 +154,24 @@ public class GUI{
                 }
             }
         });
+        */
 
         btnUpload.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    client.Upload();
-                    JOptionPane.showMessageDialog(frame, "Datei wurde hochgeladen");
+                    JFileChooser jFileChooser = new JFileChooser();
+                    jFileChooser.setDialogTitle("Choose a file to upload");
+                    jFileChooser.showOpenDialog(null);
+                    File file = jFileChooser.getSelectedFile();
+                    if(client.Upload(file))
+                        JOptionPane.showMessageDialog(frame, "Datei wurde hochgeladen");
                 } catch (IOException ioException){
                     ioException.printStackTrace();
                 }
             }
         });
-
+        /*
         btnLst.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
