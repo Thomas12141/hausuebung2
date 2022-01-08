@@ -14,7 +14,6 @@ public class LaunchServer {
         while (true) {
             Socket client = ss.accept();
             new Thread(new ClientHandler(client)).start();
-
         }
     }
 }

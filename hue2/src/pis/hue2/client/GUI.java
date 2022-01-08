@@ -7,6 +7,8 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import javax.swing.*;
+import java.nio.file.*;
+import java.util.ArrayList;
 
 
 public class GUI{
@@ -160,7 +162,7 @@ public class GUI{
                 }
             }
         });
-        */
+         */
 
         /*
          Bei einem Klick auf den Upload Button wird ein neuer SwingWorker erstellt, bei dem sich ein neues Fenster öffnet, in dem man sich die hochzuladende Datei
@@ -186,30 +188,41 @@ public class GUI{
             }
         });
 
-        /*
+
         btnLst.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    client.Lst();
+                    JPanel jPanel = new JPanel();
+                    ArrayList<String> lst = client.Lst();
+                    for (int i = 0; i<lst.size(); i++){
+                        JLabel jLabel = new JLabel(lst.get(i));
+                        jLabel.setVisible(true);
+                        jPanel.add(jLabel);
+                    }
+                    jPanel.setVisible(true);
+                    frame.add(jPanel, BorderLayout.CENTER);
                 } catch (IOException ioException){
                     ioException.printStackTrace();
                 }
             }
         });
-
+        /*
         btnDownload.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
                     client.Download();
+                    Path path = FileSystems.getDefault().getPath("").toAbsolutePath();
                     JOptionPane.showMessageDialog(frame, "Datei wurde heruntergeladen");
                 } catch (IOException ioException){
                     ioException.printStackTrace();
                 }
             }
         });
+
          */
+
 
         /*
          "Disconnect" Button

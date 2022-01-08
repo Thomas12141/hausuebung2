@@ -4,15 +4,13 @@ public class MyFile {
     private int id;
     private String name;
     private byte[] data;
-    private String fileExtension;
     private int idCounter =0;
 
-    public MyFile(String name, byte[] data, String fileExtension){
+    public MyFile(String name, byte[] data){
         this.id= idCounter;
-        idCounter--;
+        idCounter++;
         this.name= name;
         this.data = data;
-        this.fileExtension = fileExtension;
     }
 
     public int getId() {

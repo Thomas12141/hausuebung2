@@ -3,6 +3,7 @@ package pis.hue2.client;
 import java.io.*;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 
 public class Client {
 
@@ -16,6 +17,7 @@ public class Client {
     private static BufferedReader in;
     private static PrintWriter out;
     private static Socket client;
+    private static DataOutputStream dataOutputStream;
 
     /*
      Connect
@@ -31,16 +33,15 @@ public class Client {
         client = new Socket(IP, PORT);
         in = new BufferedReader(new InputStreamReader(client.getInputStream()));
         out = new PrintWriter(client.getOutputStream());
-        out.println("CON");
+        out.println(Instruction.CON);
         out.flush();
         String temp = in.readLine();
-        if(Instruction.ifACK(temp)){
+        dataOutputStream = new DataOutputStream(client.getOutputStream());
+        if(Instruction.ACK.toString().equals(temp)){
             return true;
         }
         else {
             client.close();
-            in.close();
-            out.close();
             return false;
         }
 
@@ -51,7 +52,7 @@ public class Client {
      Trennt die Verbindung von Server und Client und schickt den Befehl "DSC" an der Server
     */
     public boolean Disconnect() throws IOException{
-        out.println("DSC");
+        out.println(Instruction.DSC);
         client.close();
         return true;
     }
@@ -76,23 +77,47 @@ public class Client {
      Deklaration von DataOutputStream, um primitive Datentypen in den OutputStream zu schreiben
     */
     public boolean Upload(File file) throws IOException {
-        out.println("PUT");
+        out.println(Instruction.PUT);
         out.flush();
         String temp = in.readLine();
-        if(Instruction.ifACK(temp)){
-            DataOutputStream dataOutputStream = new DataOutputStream(client.getOutputStream());
+        if(Instruction.ACK.toString().equals(temp)){
+
             String fileName = file.getName();
             byte[] fileNameBytes = fileName.getBytes();
             byte[] fileContentBytes = new byte[(int) file.length()];
             dataOutputStream.write(fileNameBytes.length);
+            dataOutputStream.flush();
             dataOutputStream.write(fileNameBytes);
+            dataOutputStream.flush();
             dataOutputStream.write(fileContentBytes.length);
+            dataOutputStream.flush();
             dataOutputStream.write(fileContentBytes);
-            dataOutputStream.close();
+            dataOutputStream.flush();
             return true;
         }
         else {
             return false;
         }
+    }
+
+    public ArrayList<String> Lst() throws IOException{
+        ArrayList<String> lst = new ArrayList<>();
+        out.println(Instruction.LST);
+        out.flush();
+        String temp = in.readLine();
+        if (Instruction.ACK.toString().equals(temp)){
+            out.println(Instruction.ACK);
+            out.flush();
+            temp = in.readLine();
+            if (Instruction.DAT.toString().equals(temp)){
+                int count = in.read();
+                for (int i = 0; i<count; i++){
+                    lst.add(in.readLine());
+                }
+                out.println(Instruction.ACK);
+                out.flush();
+            }
+        }
+        return lst;
     }
 }
