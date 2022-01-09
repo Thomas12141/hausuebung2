@@ -131,11 +131,16 @@ public class GUI{
             }
         });
 
+        /**
+         * Dialog Fenster oeffnet sich. User muss eingeben, welche Datei (ID) geloescht werden soll
+         * Usereingabe wird in String uebergeben und an den Client weitergegeben. Dort wird in der Delete Methode weiter
+         * mit dem Wert gearbeitet
+         * @see Client
+         */
         btnDelete.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-
                     String idToDelete = JOptionPane.showInputDialog("Welche ID soll gelöscht werden?");
                     System.out.println(idToDelete);
                     if (client.Delete(idToDelete))
@@ -148,9 +153,10 @@ public class GUI{
 
 
         /**
-         * Bei einem Klick auf den Upload Button wird ein neuer SwingWorker erstellt, bei dem sich ein neues Fenster öffnet, in dem man sich die hochzuladende Datei
-         * aussuchen kann. Diese Dateien werden in der Klasse MyFile verarbeitet.
-         * Auch wird überprüft ob die Datei beim Client Server angekommen ist. Ist dies der Fall, öffnet sich ein PopUp Fenster mit der Bestätigung
+         * Bei einem Klick auf den Upload Button wird ein neuer SwingWorker erstellt, bei dem sich ein neues Fenster öffnet,
+         * in dem man sich die hochzuladende Datei aussuchen kann. Diese Dateien werden in der Klasse MyFile verarbeitet.
+         * Auch wird überprüft ob die Datei beim Client Server angekommen ist. Ist dies der Fall, öffnet sich ein PopUp
+         * Fenster mit der Bestätigung
          */
         btnUpload.addActionListener(new ActionListener() {
             @Override
@@ -174,12 +180,12 @@ public class GUI{
         /**
          * Bei einem Klick auf den List Button wird eine Liste mit Dateien angezeigt, die auf dem Server liegen
          * Dateien werden in einer ArrayList gespeichert
+         * neues Panel wird erstellt um die Labels anzuzeigen (Labels = ID + Dateiname)
+         * foreach Schleife um alle Dateien richtig anzuzeigen
          */
         btnLst.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Die ArrayList mit den Files soll hier uebergeben werden
-
                 try {
                     ArrayList<String> arrayList = client.Lst();
                     jPanel[0] = new JPanel();
@@ -199,6 +205,15 @@ public class GUI{
         });
 
 
+        /**
+         * Dialog Fenster oeffnet sich. User muss eingeben, welche Datei (ID) gedownloaded werden soll
+         * Usereingabe wird in String uebergeben und an den Client weitergegeben. Dort wird in der Download Methode weiter
+         * mit dem Wert gearbeitet
+         * Byte Array fuer Dateiinhalt aus myFile Klasse
+         * String name bekommt Dateinamen aus myFile Klasse
+         * @see MyFile
+         * Der neue Dateipfad fuer den Download wird erstellt
+         */
         btnDownload.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

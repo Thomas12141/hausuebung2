@@ -84,12 +84,26 @@ public class Client {
     }
 
 
+    /**
+     *
+     * @param fileToDelete
+     * @return boolean Wert ob Verbindung hergestellt werden darf
+     * @throws IOException
+     */
     public boolean Delete(String fileToDelete) throws IOException {
+        //schickt den Befehl "DEL" an den Server
         out.println(Instruction.DEL);
-        out.flush();
-        out.println(fileToDelete);
+
+        //leert den Ausgabestream und erzwingt das Ausschreiben aller Ausgabytes
         out.flush();
 
+        //Welche Datei soll geloescht werden
+        out.println(fileToDelete);
+
+        //leert den Ausgabestream und erzwingt das Ausschreiben aller Ausgabytes
+        out.flush();
+
+        // um die Nachricht des Servers zu speichern
         String temp = in.readLine();
         if(Instruction.ACK.toString().equals(temp))
         {
@@ -170,46 +184,91 @@ public class Client {
 
                 // zum abspeichern der Bytes
                 DataInputStream dataInputStream = new DataInputStream(client.getInputStream());
+
+                // liest die naechsten 4 Bytes aus dem InputStream und uebergibt sie der int Variablen
                 int count = dataInputStream.readInt();
 
-
+                // gibt Liste aus
                 for (int i = 0; i<count; i++){
                     lst.add(in.readLine());
                 }
 
+                // schickt den Befehl "ACK" an den Server
                 out.println(Instruction.ACK);
+
+                // leert den Ausgabestream und erzwingt das Ausschreiben aller Ausgabebytes
                 out.flush();
             }
         }
         return lst;
     }
 
+    /**
+     * Die Funktionalität um Dateien vom Server zu downloaden
+     * @param str
+     * @return myFile Die erstellte Datei
+     * @throws IOException
+     */
     public MyFile Download(String str) throws IOException {
         MyFile myFile = null;
+
+        // schickt den Befehl "LST" an den Server
         out.println(Instruction.GET);
+
+        // leert den Ausgabestream und erzwingt das Ausschreiben aller Ausgabebytes
         out.flush();
+
+        // Welche Datei soll gedownloaded werden
         out.println(str);
+
+        // leert den Ausgabestream und erzwingt das Ausschreiben aller Ausgabebytes
         out.flush();
+
+        // um die Nachricht des Servers zu speichern
         String temp = in.readLine();
+
+        // prueft ob der Befehl mit ACK uebereinstimmt
         if(Instruction.ACK.toString().equals(temp))
         {
+            // schickt den Befehl "LST" an den Server
             out.println(Instruction.ACK);
+
+            // leert den Ausgabestream und erzwingt das Ausschreiben aller Ausgabebytes
             out.flush();
+
+            // liest die naechsten 4 Bytes aus dem InputStream und uebergibt sie der int Variablen
             int nameLength = dataInputStream.readInt();
             String name = null;
             byte[] data;
+
+            // Wird geprueft ob ein Name vorhanden ist
             if(nameLength>0){
+                // Byte Array wird mit Laenge des Namens gefuellt
                 byte[] nameBytes = new byte[nameLength];
+
+                // liest bytes equal zur laenge von nameBytes
                 dataInputStream.readFully(nameBytes,0,nameLength);
+
+                // Byte Array wird zu String und in name gespeichert
                 name = new String(nameBytes);
+
+                // liest die naechsten 4 Bytes aus dem InputStream und uebergibt sie der int Variablen
                 int dataLength = dataInputStream.readInt();
+
                 if(dataLength>0){
                     data= new byte[dataLength];
+
+                    // liest bytes equal zur laenge von data
                     dataInputStream.readFully(data,0,dataLength);
+
+                    // Neue Datei wird erstellt
                     myFile = new MyFile(name, data);
                 }
             }
+            // schickt den Befehl "LST" an den Server
             out.println(Instruction.ACK);
+
+            // leert den Ausgabestream und erzwingt das Ausschreiben aller Ausgabebytes
             out.flush();
         }
         return myFile;
