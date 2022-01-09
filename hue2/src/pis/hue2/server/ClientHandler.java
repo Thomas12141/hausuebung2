@@ -54,69 +54,55 @@ public class ClientHandler implements Runnable{
                     out.flush();
 
                     // Neuer Thread um Dateien hochzuladen wird gestartet
-                    new Thread(() -> {
 
                         // DataInputStream wird zuruekgesetzt
                         DataInputStream dataInputStream = null;
+
                         try {
                             dataInputStream = new DataInputStream(client.getInputStream());
                         } catch (IOException e) {
-                            out.println(Instruction.DND);
-                            out.flush();
+                            e.printStackTrace();
                         }
 
                         // Laenge des Dateinamens
                         int fileNameLength = 0;
                         try {
-                            //bekommt die Laenge der von DataInputStream gelesen wurde
                             fileNameLength = dataInputStream.readInt();
                         } catch (IOException e) {
-                            out.println(Instruction.DND);
-                            out.flush();
+                            e.printStackTrace();
                         }
+                        byte[] fileNameBytes= null;
+                        byte[] fileContentBytes = null;
+                        if(fileNameLength>0){
+                            fileNameBytes = new byte[fileNameLength];
+                            try {
+                                dataInputStream.readFully(fileNameBytes,0,fileNameBytes.length);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            int fileContentLength = 0;
+                            try {
+                                fileContentLength = dataInputStream.readInt();
 
-                        // Laenge des Dateiinhalts
-                        int fileContentLength = 0;
-                        try {
-                            // bekommt die Laenge der von DataInputStream gelesen wurde
-                            fileContentLength = dataInputStream.readInt();
-                        } catch (IOException e) {
-                            out.println(Instruction.DND);
-                            out.flush();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            if(fileContentLength>0){
+                                fileContentBytes = new byte[fileContentLength];
+                                try {
+                                    dataInputStream.readFully(fileContentBytes,0,fileContentBytes.length);
+
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
                         }
+                        if(fileContentBytes!=null&&fileNameBytes!=null){
 
-                        // schaut ob Inhalt und Name der Datei > 0 sind
-                        if (fileContentLength>0&&fileNameLength>0) {
-
-                            // Byte Array in groeße von Dateiname
-                            byte[] fileNameBytes = new byte[fileNameLength];
-                            try {
-                                // Liest von fileNameBytes startet bei 0 und liest so viele Bytes wie fileNameBytes lang ist
-                                dataInputStream.readFully(fileNameBytes, 0, fileNameBytes.length);
-                            } catch (IOException e) {
-                                out.println(Instruction.DND);
-                                out.flush();
-                            }
-
-                            // String in groeße von fileNameBytes
-                            String fileName = new String(fileNameBytes);
-
-                            // Byte Array in groeße von Dateiinhalt
-                            byte[] fileContentBytes = new byte[fileContentLength];
-                            try {
-                                // Liest von fileContentBytes startet bei 0 und liest so viele Bytes wie fileContentBytes lang ist
-                                dataInputStream.readFully(fileContentBytes, 0, fileContentLength);
-                            } catch (IOException e) {
-                                out.println(Instruction.DND);
-                                out.flush();
-                            }
-                            // Dateien werden in Form von einem String an den LaunchServer uebergeben
-                            LaunchServer.myFiles.add(new MyFile(new String(fileNameBytes), fileContentBytes));
-                            out.println(Instruction.ACK);
-                            out.flush();
+                            MyFile myFile = new MyFile(new String(fileNameBytes), fileContentBytes);
+                            System.out.println(MyFile.myFiles.add(myFile));
                         }
                         // Thread wird gestartet
-                    }).start();
                 }
 
                 // vergleicht Nachricht vom Server mit temp
@@ -137,9 +123,9 @@ public class ClientHandler implements Runnable{
                     temp = in.readLine();
                     if (Instruction.ACK.toString().equals(temp)){
 
-                        out.println(LaunchServer.myFiles.size());
+                        out.println(MyFile.myFiles.size());
                         out.flush();
-                        for (MyFile myFile: LaunchServer.myFiles) {
+                        for (MyFile myFile: MyFile.myFiles) {
                             out.println(myFile.getId()+"   "+myFile.getName());
                             out.flush();
                         }

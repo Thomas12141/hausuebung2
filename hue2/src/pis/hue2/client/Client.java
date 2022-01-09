@@ -32,6 +32,7 @@ public class Client {
     //Der Client
     private static Socket client;
     private static DataOutputStream dataOutputStream;
+    private static DataInputStream dataInputStream;
 
     /**
      * Baut eine Verbindung mit dem Server auf
@@ -58,6 +59,7 @@ public class Client {
         //z. B. ACK oder DND
         String temp = in.readLine();
         dataOutputStream = new DataOutputStream(client.getOutputStream());
+        dataInputStream = new DataInputStream(client.getInputStream());
         if(Instruction.ACK.toString().equals(temp)){
             return true;
         }
@@ -108,9 +110,8 @@ public class Client {
 
         // um die Nachricht des Servers zu speichern
         String temp = in.readLine();
-
         if(Instruction.ACK.toString().equals(temp)){
-
+            FileInputStream fileInputStream = new FileInputStream(file.getAbsolutePath());
             // speichert den Dateinamen
             String fileName = file.getName();
 
@@ -119,14 +120,12 @@ public class Client {
 
             // Byte Array für Dateiinhalt damit dieser in Bytes umgewandelt wird
             byte[] fileContentBytes = new byte[(int) file.length()];
-            dataOutputStream.write(fileNameBytes.length);
-            dataOutputStream.flush();
+            fileInputStream.read(fileContentBytes);
+            dataOutputStream.writeInt(fileNameBytes.length);
             dataOutputStream.write(fileNameBytes);
-            dataOutputStream.flush();
-            dataOutputStream.write(fileContentBytes.length);
-            dataOutputStream.flush();
+            dataOutputStream.writeInt(fileContentBytes.length);
             dataOutputStream.write(fileContentBytes);
-            dataOutputStream.flush();
+            System.out.println("Client " + temp);
             return true;
         }
         else {
