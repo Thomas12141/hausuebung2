@@ -81,18 +81,21 @@ public class Client {
         return true;
     }
 
-    /*
-    public boolean Delete(){
-        out.println(Instruction.DEL);
-        String fileToDelete;
-        out.println(fileToDelete);
-        String temp = in.readLine();
-        if(Instruction.ifDEL(temp))
-        {
 
+    public boolean Delete(String fileToDelete) throws IOException {
+        out.println(Instruction.DEL);
+        out.flush();
+        out.println(fileToDelete);
+        out.flush();
+
+        String temp = in.readLine();
+        if(Instruction.ACK.toString().equals(temp))
+        {
+            return true;
         }
+        return false;
     }
-    */
+
 
     /**
      * Laed eine ausgewaehlte Datei hoch

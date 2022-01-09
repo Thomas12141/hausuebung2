@@ -46,4 +46,15 @@ public class MyFile {
         return name;
     }
 
+    public static boolean Delete(int fileToDelete){
+        if (fileToDelete<idCounter) {
+            for (int i = fileToDelete - 1; i < idCounter; i++) {
+                myFiles.add(i, myFiles.get(i + 1));
+            }
+            myFiles.remove(idCounter);
+            idCounter--;
+            return true;
+        }
+        return false;
+    }
 }

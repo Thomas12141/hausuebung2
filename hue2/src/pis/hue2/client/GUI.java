@@ -70,6 +70,7 @@ public class GUI{
         serverPortPanel.add(tfPort);
         panel.add(serverPortPanel);
         final JPanel[] jPanel = new JPanel[1];
+
         // Buttons Connect, Delete, Disconnect, Download, List, Upload
         JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         btnConnect = new JButton("Connect");
@@ -129,19 +130,20 @@ public class GUI{
             }
         });
 
-        /*
         btnDelete.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    client.Delete();
-                    JOptionPane.showMessageDialog(frame, "Datei wurde gelöscht");
+
+                    String idToDelete = "";
+                    if (client.Delete(idToDelete))
+                        JOptionPane.showMessageDialog(frame, "Datei wurde gelöscht");
                 } catch (IOException ioException){
                     ioException.printStackTrace();
                 }
             }
         });
-         */
+
 
         /**
          * Bei einem Klick auf den Upload Button wird ein neuer SwingWorker erstellt, bei dem sich ein neues Fenster öffnet, in dem man sich die hochzuladende Datei
@@ -178,7 +180,8 @@ public class GUI{
 
                 try {
                     ArrayList<String> arrayList = client.Lst();
-                    jPanel[0] = new JPanel(new FlowLayout());
+                    jPanel[0] = new JPanel();
+                    jPanel[0].setLayout(new BoxLayout(jPanel[0], BoxLayout.Y_AXIS));
                     for (String str:
                          arrayList) {
                         JLabel jLabel = new JLabel(str);
@@ -190,23 +193,6 @@ public class GUI{
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
-
-                /*
-                try {
-                    JPanel jPanel = new JPanel();
-                    ArrayList<String> lst = client.Lst();
-                    for (int i = 0; i<lst.size(); i++){
-                        JLabel jLabel = new JLabel(lst.get(i));
-                        jLabel.setVisible(true);
-                        jPanel.add(jLabel);
-                    }
-                    jPanel.setVisible(true);
-                    frame.add(jPanel, BorderLayout.CENTER);
-                } catch (IOException ioException){
-                    ioException.printStackTrace();
-                }
-
-                 */
             }
         });
 

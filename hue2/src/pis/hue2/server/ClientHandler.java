@@ -133,9 +133,22 @@ public class ClientHandler implements Runnable{
                         }
                     }
                 }
+                if(Instruction.DEL.toString().equals(temp)){
+
+                    int fileToDelete = Integer.parseInt(in.readLine());
+                    if(MyFile.Delete(fileToDelete)){
+                        out.println(Instruction.ACK);
+                        out.flush();
+                    }
+                    else {
+                        out.println(Instruction.DND);
+                        out.flush();
+                    }
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 }
