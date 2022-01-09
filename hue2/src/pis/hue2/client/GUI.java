@@ -209,7 +209,7 @@ public class GUI{
                     String name = myFile.getName();
                     Path path = FileSystems.getDefault().getPath("").toAbsolutePath();
                     System.out.println(name);
-                    try(FileOutputStream stream = new FileOutputStream(path+"\\"+name)){
+                    try(FileOutputStream stream = new FileOutputStream(path+"\\Downloads"+"\\"+name)){
                         stream.write(data);
                     }
                 } catch (IOException ex) {

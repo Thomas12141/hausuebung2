@@ -200,8 +200,8 @@ public class Client {
             byte[] data;
             if(nameLength>0){
                 byte[] nameBytes = new byte[nameLength];
-                name = new String(nameBytes);
                 dataInputStream.readFully(nameBytes,0,nameLength);
+                name = new String(nameBytes);
                 int dataLength = dataInputStream.readInt();
                 if(dataLength>0){
                     data= new byte[dataLength];
