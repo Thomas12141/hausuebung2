@@ -1,12 +1,13 @@
 package pis.hue2.client;
 
-import pis.hue2.server.ClientHandler;
+
 import pis.hue2.server.MyFile;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import javax.swing.*;
 import java.nio.file.*;
@@ -135,7 +136,8 @@ public class GUI{
             public void actionPerformed(ActionEvent e) {
                 try {
 
-                    String idToDelete = "";
+                    String idToDelete = JOptionPane.showInputDialog("Welche ID soll gelöscht werden?");
+                    System.out.println(idToDelete);
                     if (client.Delete(idToDelete))
                         JOptionPane.showMessageDialog(frame, "Datei wurde gelöscht");
                 } catch (IOException ioException){
@@ -196,21 +198,26 @@ public class GUI{
             }
         });
 
-        /*
+
         btnDownload.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                String fileToDownload = JOptionPane.showInputDialog("Welche id möchten Sie herunterladen?");
                 try {
-                    client.Download();
+                    MyFile myFile = client.Download(fileToDownload);
+                    byte[] data = myFile.getData();
+                    String name = myFile.getName();
                     Path path = FileSystems.getDefault().getPath("").toAbsolutePath();
-                    JOptionPane.showMessageDialog(frame, "Datei wurde heruntergeladen");
-                } catch (IOException ioException){
-                    ioException.printStackTrace();
+                    System.out.println(name);
+                    try(FileOutputStream stream = new FileOutputStream(path+"\\"+name)){
+                        stream.write(data);
+                    }
+                } catch (IOException ex) {
+                    ex.printStackTrace();
                 }
+                JOptionPane.showMessageDialog(frame, "Datei wurde heruntergeladen");
             }
         });
-
-         */
 
         /**
          * Es wird geprueft, ob der Befehl beim Server angekommen ist. Ist dies der Fall oeffnet sich ein PopUp Fenster mit der Bestaetigung,
@@ -240,4 +247,5 @@ public class GUI{
 
 
     }
+
 }

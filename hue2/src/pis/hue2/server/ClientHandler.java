@@ -145,6 +145,27 @@ public class ClientHandler implements Runnable{
                         out.flush();
                     }
                 }
+                if(Instruction.GET.toString().equals(temp)){
+                    int fileToDownload = Integer.parseInt(in.readLine());
+                    if(fileToDownload-1<MyFile.myFiles.size()){
+                        out.println(Instruction.ACK);
+                        out.flush();
+                        temp = in.readLine();
+                        if (Instruction.ACK.toString().equals(temp))
+                        {
+                            DataOutputStream dataOutputStream = new DataOutputStream(client.getOutputStream());
+                            String name = MyFile.myFiles.get(fileToDownload-1).getName();
+                            byte[] nameBytes = name.getBytes();
+                            dataOutputStream.writeInt(nameBytes.length);
+                            dataOutputStream.write(nameBytes);
+                            dataOutputStream.writeInt(MyFile.myFiles.get(fileToDownload-1).getData().length);
+                            dataOutputStream.write(MyFile.myFiles.get(fileToDownload-1).getData());
+                        }
+                    }else {
+                        out.println(Instruction.DND);
+                        out.flush();
+                    }
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();

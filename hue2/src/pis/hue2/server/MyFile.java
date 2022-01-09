@@ -46,15 +46,24 @@ public class MyFile {
         return name;
     }
 
+    private void setId(int id) {
+        this.id = id;
+    }
+
     public static boolean Delete(int fileToDelete){
         if (fileToDelete<idCounter) {
-            for (int i = fileToDelete - 1; i < idCounter; i++) {
-                myFiles.add(i, myFiles.get(i + 1));
+            myFiles.remove(fileToDelete-1);
+            idCounter -=1;
+            for (int i=0;i< idCounter-1;i++)
+            {
+                myFiles.get(i).setId(i+1);
             }
-            myFiles.remove(idCounter);
-            idCounter--;
             return true;
         }
         return false;
+    }
+
+    public byte[] getData() {
+        return data;
     }
 }

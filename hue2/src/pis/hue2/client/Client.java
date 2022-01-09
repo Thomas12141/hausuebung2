@@ -1,5 +1,7 @@
 package pis.hue2.client;
 
+import pis.hue2.server.MyFile;
+
 import java.io.*;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
@@ -180,5 +182,36 @@ public class Client {
             }
         }
         return lst;
+    }
+
+    public MyFile Download(String str) throws IOException {
+        MyFile myFile = null;
+        out.println(Instruction.GET);
+        out.flush();
+        out.println(str);
+        out.flush();
+        String temp = in.readLine();
+        if(Instruction.ACK.toString().equals(temp))
+        {
+            out.println(Instruction.ACK);
+            out.flush();
+            int nameLength = dataInputStream.readInt();
+            String name = null;
+            byte[] data;
+            if(nameLength>0){
+                byte[] nameBytes = new byte[nameLength];
+                name = new String(nameBytes);
+                dataInputStream.readFully(nameBytes,0,nameLength);
+                int dataLength = dataInputStream.readInt();
+                if(dataLength>0){
+                    data= new byte[dataLength];
+                    dataInputStream.readFully(data,0,dataLength);
+                    myFile = new MyFile(name, data);
+                }
+            }
+            out.println(Instruction.ACK);
+            out.flush();
+        }
+        return myFile;
     }
 }
