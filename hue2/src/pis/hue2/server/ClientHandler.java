@@ -100,7 +100,7 @@ public class ClientHandler implements Runnable{
                         if(fileContentBytes!=null&&fileNameBytes!=null){
 
                             MyFile myFile = new MyFile(new String(fileNameBytes), fileContentBytes);
-                            System.out.println(MyFile.myFiles.add(myFile));
+                            MyFile.myFiles.add(myFile);
                         }
                         // Thread wird gestartet
                 }
@@ -123,8 +123,10 @@ public class ClientHandler implements Runnable{
                     temp = in.readLine();
                     if (Instruction.ACK.toString().equals(temp)){
 
-                        out.println(MyFile.myFiles.size());
+                        out.println(Instruction.DAT);
                         out.flush();
+                        DataOutputStream dataOutputStream = new DataOutputStream(client.getOutputStream());
+                        dataOutputStream.writeInt(MyFile.myFiles.size());
                         for (MyFile myFile: MyFile.myFiles) {
                             out.println(myFile.getId()+"   "+myFile.getName());
                             out.flush();

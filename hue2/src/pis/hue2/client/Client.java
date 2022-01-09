@@ -125,7 +125,6 @@ public class Client {
             dataOutputStream.write(fileNameBytes);
             dataOutputStream.writeInt(fileContentBytes.length);
             dataOutputStream.write(fileContentBytes);
-            System.out.println("Client " + temp);
             return true;
         }
         else {
@@ -152,7 +151,6 @@ public class Client {
         String temp = in.readLine();
 
         if (Instruction.ACK.toString().equals(temp)){
-
             // schickt den Befehl "ACK" an den Server
             out.println(Instruction.ACK);
 
@@ -166,10 +164,14 @@ public class Client {
             if (Instruction.DAT.toString().equals(temp)){
 
                 // zum abspeichern der Bytes
-                int count = in.read();
+                DataInputStream dataInputStream = new DataInputStream(client.getInputStream());
+                int count = dataInputStream.readInt();
+
+
                 for (int i = 0; i<count; i++){
                     lst.add(in.readLine());
                 }
+
                 out.println(Instruction.ACK);
                 out.flush();
             }

@@ -1,5 +1,6 @@
 package pis.hue2.client;
 
+import pis.hue2.server.ClientHandler;
 import pis.hue2.server.MyFile;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -68,7 +69,7 @@ public class GUI{
         serverPortPanel.add(new JLabel("Port:  "));
         serverPortPanel.add(tfPort);
         panel.add(serverPortPanel);
-
+        final JPanel[] jPanel = new JPanel[1];
         // Buttons Connect, Delete, Disconnect, Download, List, Upload
         JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         btnConnect = new JButton("Connect");
@@ -173,6 +174,24 @@ public class GUI{
         btnLst.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                // Die ArrayList mit den Files soll hier uebergeben werden
+
+                try {
+                    ArrayList<String> arrayList = client.Lst();
+                    jPanel[0] = new JPanel(new FlowLayout());
+                    for (String str:
+                         arrayList) {
+                        JLabel jLabel = new JLabel(str);
+                        jLabel.setVisible(true);
+                        jPanel[0].add(jLabel);
+                    }
+                    frame.add(jPanel[0], BorderLayout.CENTER);
+                    frame.setVisible(true);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+
+                /*
                 try {
                     JPanel jPanel = new JPanel();
                     ArrayList<String> lst = client.Lst();
@@ -186,6 +205,8 @@ public class GUI{
                 } catch (IOException ioException){
                     ioException.printStackTrace();
                 }
+
+                 */
             }
         });
 
