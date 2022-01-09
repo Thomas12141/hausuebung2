@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>pis.hue2.server.MyFile</OriginalElement>
+  <nodes>
+    <node x="0.0" y="0.0">pis.hue2.server.MyFile</node>
+  </nodes>
+  <notes />
+  <edges />
+  <settings layout="Hierarchic" zoom="1.0" showDependencies="false" x="46.5" y="14.5" />
+  <SelectedNodes>
+    <node>pis.hue2.server.MyFile</node>
+  </SelectedNodes>
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

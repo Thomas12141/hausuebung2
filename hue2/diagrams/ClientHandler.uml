@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>pis.hue2.server.ClientHandler</OriginalElement>
+  <nodes>
+    <node x="0.0" y="0.0">java.lang.FunctionalInterface</node>
+    <node x="31.0" y="79.0">java.lang.Runnable</node>
+    <node x="17.0" y="158.0">pis.hue2.server.ClientHandler</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="java.lang.Runnable" target="java.lang.FunctionalInterface" relationship="ANNOTATION">
+      <point x="0.0" y="-14.5" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="pis.hue2.server.ClientHandler" target="java.lang.Runnable" relationship="REALIZATION">
+      <point x="0.0" y="-14.5" />
+      <point x="0.0" y="14.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="1.0" showDependencies="false" x="86.0" y="93.5" />
+  <SelectedNodes>
+    <node>pis.hue2.server.ClientHandler</node>
+  </SelectedNodes>
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
