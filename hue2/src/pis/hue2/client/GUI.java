@@ -113,36 +113,49 @@ public class GUI{
         btnConnect.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try {
-                    if(client.Connect()) {
-                        JOptionPane.showMessageDialog(frame, "Mit 127.0.0.1 verbunden.");
+                new SwingWorker(){
+                    @Override
+                    protected Object doInBackground() throws Exception {
+                        try {
+                            if(client.Connect()) {
 
-                        btnDisconnect.setVisible(true);
-                        btnConnect.setVisible(false);
-                        btnDelete.setVisible(true);
-                        btnDisconnect.setVisible(true);
-                        btnDownload.setVisible(true);
-                        btnLst.setVisible(true);
-                        btnUpload.setVisible(true);
+                                JOptionPane.showMessageDialog(frame, "Mit 127.0.0.1 verbunden.");
+
+                                btnDisconnect.setVisible(true);
+                                btnConnect.setVisible(false);
+                                btnDelete.setVisible(true);
+                                btnDisconnect.setVisible(true);
+                                btnDownload.setVisible(true);
+                                btnLst.setVisible(true);
+                                btnUpload.setVisible(true);
+                            }
+                        } catch (IOException ioException) {
+                            ioException.printStackTrace();
+                        }
+                        return null;
                     }
-                } catch (IOException ioException) {
-                    ioException.printStackTrace();
-                }
+                    }.execute();
             }
         });
 
         btnDelete.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try {
+                new SwingWorker(){
+                    @Override
+                    protected Object doInBackground() throws Exception {
+                        try {
 
-                    String idToDelete = JOptionPane.showInputDialog("Welche ID soll gelöscht werden?");
-                    System.out.println(idToDelete);
-                    if (client.Delete(idToDelete))
-                        JOptionPane.showMessageDialog(frame, "Datei wurde gelöscht");
-                } catch (IOException ioException){
-                    ioException.printStackTrace();
-                }
+                            String idToDelete = JOptionPane.showInputDialog("Welche ID soll gelöscht werden?");
+                            System.out.println(idToDelete);
+                            if (client.Delete(idToDelete))
+                                JOptionPane.showMessageDialog(frame, "Datei wurde gelöscht");
+                        } catch (IOException ioException){
+                            ioException.printStackTrace();
+                        }
+                        return null;
+                    }
+                }.execute();
             }
         });
 
@@ -179,22 +192,27 @@ public class GUI{
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Die ArrayList mit den Files soll hier uebergeben werden
-
-                try {
-                    ArrayList<String> arrayList = client.Lst();
-                    jPanel[0] = new JPanel();
-                    jPanel[0].setLayout(new BoxLayout(jPanel[0], BoxLayout.Y_AXIS));
-                    for (String str:
-                         arrayList) {
-                        JLabel jLabel = new JLabel(str);
-                        jLabel.setVisible(true);
-                        jPanel[0].add(jLabel);
+                new SwingWorker(){
+                    @Override
+                    protected Object doInBackground() throws Exception {
+                        try {
+                            ArrayList<String> arrayList = client.Lst();
+                            jPanel[0] = new JPanel();
+                            jPanel[0].setLayout(new BoxLayout(jPanel[0], BoxLayout.Y_AXIS));
+                            for (String str:
+                                    arrayList) {
+                                JLabel jLabel = new JLabel(str);
+                                jLabel.setVisible(true);
+                                jPanel[0].add(jLabel);
+                            }
+                            frame.add(jPanel[0], BorderLayout.CENTER);
+                            frame.setVisible(true);
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        }
+                        return null;
                     }
-                    frame.add(jPanel[0], BorderLayout.CENTER);
-                    frame.setVisible(true);
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
+                }.execute();
             }
         });
 
@@ -202,20 +220,26 @@ public class GUI{
         btnDownload.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String fileToDownload = JOptionPane.showInputDialog("Welche id möchten Sie herunterladen?");
-                try {
-                    MyFile myFile = client.Download(fileToDownload);
-                    byte[] data = myFile.getData();
-                    String name = myFile.getName();
-                    Path path = FileSystems.getDefault().getPath("").toAbsolutePath();
-                    System.out.println(name);
-                    try(FileOutputStream stream = new FileOutputStream(path+"\\Downloads"+"\\"+name)){
-                        stream.write(data);
+                new SwingWorker(){
+                    @Override
+                    protected Object doInBackground() throws Exception {
+                        String fileToDownload = JOptionPane.showInputDialog("Welche id möchten Sie herunterladen?");
+                        try {
+                            MyFile myFile = client.Download(fileToDownload);
+                            byte[] data = myFile.getData();
+                            String name = myFile.getName();
+                            Path path = FileSystems.getDefault().getPath("").toAbsolutePath();
+                            System.out.println(name);
+                            try(FileOutputStream stream = new FileOutputStream(path+"\\Downloads"+"\\"+name)){
+                                stream.write(data);
+                            }
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        }
+                        JOptionPane.showMessageDialog(frame, "Datei wurde heruntergeladen");
+                        return null;
                     }
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-                JOptionPane.showMessageDialog(frame, "Datei wurde heruntergeladen");
+                }.execute();
             }
         });
 
@@ -228,20 +252,27 @@ public class GUI{
         btnDisconnect.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try {
-                    if(client.Disconnect()){
-                        JOptionPane.showMessageDialog(frame, "Verbindung wurde getrennt");
-                        btnConnect.setVisible(true);
-                        btnDisconnect.setVisible(false);
-                        btnDelete.setVisible(false);
-                        btnDisconnect.setVisible(false);
-                        btnDownload.setVisible(false);
-                        btnLst.setVisible(false);
-                        btnUpload.setVisible(false);
+                new SwingWorker(){
+                    @Override
+                    protected Object doInBackground() throws Exception {
+                        try {
+                            if(client.Disconnect()){
+                                JOptionPane.showMessageDialog(frame, "Verbindung wurde getrennt");
+                                btnConnect.setVisible(true);
+                                btnDisconnect.setVisible(false);
+                                btnDelete.setVisible(false);
+                                btnDisconnect.setVisible(false);
+                                btnDownload.setVisible(false);
+                                btnLst.setVisible(false);
+                                btnUpload.setVisible(false);
+                            }
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        }
+                        return null;
                     }
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
+                }.execute();
+
             }
         });
 

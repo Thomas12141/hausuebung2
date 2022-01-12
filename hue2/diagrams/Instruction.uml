@@ -3,40 +3,61 @@
   <ID>JAVA</ID>
   <OriginalElement>pis.hue2.client.Instruction</OriginalElement>
   <nodes>
-    <node x="321.0" y="0.0">java.lang.constant.Constable</node>
-    <node x="165.0" y="79.0">java.lang.Enum</node>
-    <node x="163.0" y="158.0">pis.hue2.client.Instruction</node>
-    <node x="143.0" y="0.0">java.lang.Comparable</node>
-    <node x="0.0" y="0.0">java.io.Serializable</node>
+    <node x="352.9270833333333" y="0.0">java.lang.constant.Constable</node>
+    <node x="104.92708333333331" y="104.0">java.lang.Enum</node>
+    <node x="0.0" y="507.0">pis.hue2.client.Instruction</node>
+    <node x="172.92708333333331" y="0.0">java.lang.Comparable</node>
+    <node x="207.0" y="496.0">java.lang.Enum.EnumDesc</node>
+    <node x="29.927083333333314" y="12.5">java.io.Serializable</node>
   </nodes>
   <notes />
   <edges>
+    <edge source="java.lang.Enum.EnumDesc" target="java.lang.Enum" relationship="DEPENDENCY">
+      <point x="-59.5" y="-60.5" />
+      <point x="266.5" y="471.0" />
+      <point x="252.92708333333331" y="471.0" />
+      <point x="0.0" y="171.0" />
+    </edge>
     <edge source="pis.hue2.client.Instruction" target="java.lang.Enum" relationship="GENERALIZATION">
-      <point x="0.0" y="-14.5" />
-      <point x="0.0" y="14.5" />
+      <point x="0.0" y="-49.5" />
+      <point x="93.5" y="471.0" />
+      <point x="154.26041666666663" y="471.0" />
+      <point x="-98.66666666666667" y="171.0" />
     </edge>
     <edge source="java.lang.Enum" target="java.io.Serializable" relationship="REALIZATION">
-      <point x="0.0" y="-14.5" />
-      <point x="222.0" y="54.0" />
-      <point x="61.5" y="54.0" />
+      <point x="0.0" y="-171.0" />
+      <point x="252.92708333333331" y="79.0" />
+      <point x="91.42708333333331" y="79.0" />
       <point x="0.0" y="14.5" />
     </edge>
     <edge source="java.lang.Enum" target="java.lang.constant.Constable" relationship="REALIZATION">
-      <point x="0.0" y="-14.5" />
-      <point x="222.0" y="54.0" />
-      <point x="378.0" y="54.0" />
-      <point x="0.0" y="14.5" />
+      <point x="0.0" y="-171.0" />
+      <point x="252.92708333333331" y="79.0" />
+      <point x="498.4270833333333" y="79.0" />
+      <point x="0.0" y="27.0" />
     </edge>
     <edge source="java.lang.Enum" target="java.lang.Comparable" relationship="REALIZATION">
-      <point x="0.0" y="-14.5" />
-      <point x="0.0" y="14.5" />
+      <point x="0.0" y="-171.0" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="java.lang.Enum.EnumDesc" target="java.lang.Enum" relationship="INNER_CLASS">
+      <point x="59.5" y="-60.5" />
+      <point x="385.5" y="471.0" />
+      <point x="351.59375" y="471.0" />
+      <point x="98.66666666666669" y="171.0" />
     </edge>
   </edges>
-  <settings layout="Hierarchic" zoom="1.0" showDependencies="false" x="217.5" y="93.5" />
+  <settings layout="Hierarchic" zoom="1.0" showDependencies="false" x="322.0" y="308.5" />
   <SelectedNodes>
     <node>pis.hue2.client.Instruction</node>
   </SelectedNodes>
-  <Categories />
+  <Categories>
+    <Category>Constructors</Category>
+    <Category>Fields</Category>
+    <Category>Inner Classes</Category>
+    <Category>Methods</Category>
+    <Category>Properties</Category>
+  </Categories>
   <SCOPE>All</SCOPE>
   <VISIBILITY>private</VISIBILITY>
 </Diagram>

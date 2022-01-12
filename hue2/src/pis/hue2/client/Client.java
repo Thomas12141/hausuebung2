@@ -51,7 +51,9 @@ public class Client {
         in = new BufferedReader(new InputStreamReader(client.getInputStream()));
         out = new PrintWriter(client.getOutputStream());
 
+
         //schickt den Befehl "CON" an den Server
+        System.out.println("Print: "+Instruction.CON);
         out.println(Instruction.CON);
 
         //leert den Ausgabestream und erzwingt das Ausschreiben aller Ausgabytes
@@ -59,10 +61,12 @@ public class Client {
 
         // um die Nachricht des Servers zu speichern. Wird benoetigt, um zu ueberpruefen welche Antwort vom Server kommt,
         //z. B. ACK oder DND
+        System.out.print("In: ACK oder DND, empfangen: ");
         String temp = in.readLine();
-        dataOutputStream = new DataOutputStream(client.getOutputStream());
-        dataInputStream = new DataInputStream(client.getInputStream());
+        System.out.println(temp);
         if(Instruction.ACK.toString().equals(temp)){
+            dataOutputStream = new DataOutputStream(client.getOutputStream());
+            dataInputStream = new DataInputStream(client.getInputStream());
             return true;
         }
         else {
@@ -78,19 +82,30 @@ public class Client {
      * @throws IOException
      */
     public boolean Disconnect() throws IOException{
+        System.out.println("Print: "+ Instruction.DSC);
         out.println(Instruction.DSC);
-        client.close();
-        return true;
+        out.flush();
+        System.out.println("In: "+Instruction.DSC);
+        String temp= in.readLine();
+        if(Instruction.DSC.toString().equals(temp))
+        {
+            client.close();
+            return true;
+        }
+        return false;
     }
 
 
     public boolean Delete(String fileToDelete) throws IOException {
+        System.out.println("Print: "+ Instruction.DEL);
         out.println(Instruction.DEL);
         out.flush();
+        System.out.println("Print: die id der Datei, den der Server löschen soll. Id: "+fileToDelete);
         out.println(fileToDelete);
         out.flush();
-
+        System.out.print("In: ACK oder DND, empfangen: ");
         String temp = in.readLine();
+        System.out.println(temp);
         if(Instruction.ACK.toString().equals(temp))
         {
             return true;
@@ -108,12 +123,14 @@ public class Client {
      */
     public boolean Upload(File file) throws IOException {
         // schickt den Befehl "PUT" an den Server
+        System.out.println("Print: "+Instruction.PUT);
         out.println(Instruction.PUT);
 
         // leert den Ausgabestream und erzwingt das Ausschreiben aller Ausgabebytes
         out.flush();
 
         // um die Nachricht des Servers zu speichern
+        System.out.println("In: "+Instruction.ACK);
         String temp = in.readLine();
         if(Instruction.ACK.toString().equals(temp)){
             FileInputStream fileInputStream = new FileInputStream(file.getAbsolutePath());
@@ -126,9 +143,13 @@ public class Client {
             // Byte Array für Dateiinhalt damit dieser in Bytes umgewandelt wird
             byte[] fileContentBytes = new byte[(int) file.length()];
             fileInputStream.read(fileContentBytes);
+            System.out.println("Print: The length if the name");
             dataOutputStream.writeInt(fileNameBytes.length);
+            System.out.println("Print: The name");
             dataOutputStream.write(fileNameBytes);
+            System.out.println("Print: The length if the data");
             dataOutputStream.writeInt(fileContentBytes.length);
+            System.out.println("Print: The data");
             dataOutputStream.write(fileContentBytes);
             return true;
         }
@@ -147,22 +168,26 @@ public class Client {
         ArrayList<String> lst = new ArrayList<>();
 
         // schickt den Befehl "LST" an den Server
+        System.out.println("Print: "+Instruction.LST);
         out.println(Instruction.LST);
 
         // leert den Ausgabestream und erzwingt das Ausschreiben aller Ausgabebytes
         out.flush();
 
         // um die Nachricht des Servers zu speichern
+        System.out.println("In: "+Instruction.ACK);
         String temp = in.readLine();
 
         if (Instruction.ACK.toString().equals(temp)){
             // schickt den Befehl "ACK" an den Server
+            System.out.println("Print: "+Instruction.ACK);
             out.println(Instruction.ACK);
 
             // leert den Ausgabestream und erzwingt das Ausschreiben aller Ausgabebytes
             out.flush();
 
             // um die Nachricht des Servers zu speichern
+            System.out.println("In: "+Instruction.DAT);
             temp = in.readLine();
 
             // prueft ob der Befehl mit DAT uebereinstimmt
@@ -170,13 +195,15 @@ public class Client {
 
                 // zum abspeichern der Bytes
                 DataInputStream dataInputStream = new DataInputStream(client.getInputStream());
+                System.out.println("In: The length of the list");
                 int count = dataInputStream.readInt();
 
 
                 for (int i = 0; i<count; i++){
+                    System.out.println("In: The "+(i+1)+" element of the list");
                     lst.add(in.readLine());
                 }
-
+                System.out.println("Print: "+Instruction.ACK);
                 out.println(Instruction.ACK);
                 out.flush();
             }
@@ -186,25 +213,33 @@ public class Client {
 
     public MyFile Download(String str) throws IOException {
         MyFile myFile = null;
+        System.out.println("Print: "+Instruction.GET);
         out.println(Instruction.GET);
         out.flush();
+        System.out.println("Print: the id of the file");
         out.println(str);
         out.flush();
+        System.out.println("In: "+Instruction.ACK);
         String temp = in.readLine();
         if(Instruction.ACK.toString().equals(temp))
         {
+            System.out.println("Print: "+Instruction.ACK);
             out.println(Instruction.ACK);
             out.flush();
+            System.out.println("In: the length of the name of the file");
             int nameLength = dataInputStream.readInt();
             String name = null;
             byte[] data;
             if(nameLength>0){
                 byte[] nameBytes = new byte[nameLength];
+                System.out.println("In: The name of the file");
                 dataInputStream.readFully(nameBytes,0,nameLength);
                 name = new String(nameBytes);
+                System.out.println("In: the length of the content");
                 int dataLength = dataInputStream.readInt();
                 if(dataLength>0){
                     data= new byte[dataLength];
+                    System.out.println("In: the content of the file");
                     dataInputStream.readFully(data,0,dataLength);
                     myFile = new MyFile(name, data);
                 }

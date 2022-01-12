@@ -7,11 +7,17 @@
   </nodes>
   <notes />
   <edges />
-  <settings layout="Hierarchic" zoom="1.0" showDependencies="false" x="46.5" y="14.5" />
+  <settings layout="Hierarchic" zoom="1.0" showDependencies="false" x="80.0" y="105.5" />
   <SelectedNodes>
     <node>pis.hue2.server.MyFile</node>
   </SelectedNodes>
-  <Categories />
+  <Categories>
+    <Category>Constructors</Category>
+    <Category>Fields</Category>
+    <Category>Inner Classes</Category>
+    <Category>Methods</Category>
+    <Category>Properties</Category>
+  </Categories>
   <SCOPE>All</SCOPE>
   <VISIBILITY>private</VISIBILITY>
 </Diagram>

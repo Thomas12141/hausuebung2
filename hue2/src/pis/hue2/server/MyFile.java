@@ -6,13 +6,15 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.lang.Thread;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * In der Klasse MyFile werden die Dateien verarbeitet
  * @author Thomas Fidorin, Fabian Woyda
  */
 public class MyFile {
-    static ArrayList<MyFile> myFiles = new ArrayList<>();
+    static List myFiles = Collections.synchronizedList(new ArrayList<MyFile>());
     private int id;
     private String name;
     private byte[] data;
@@ -56,7 +58,10 @@ public class MyFile {
             idCounter -=1;
             for (int i=0;i< idCounter-1;i++)
             {
-                myFiles.get(i).setId(i+1);
+                if(myFiles.get(i) instanceof MyFile) {
+                    MyFile file = (MyFile) myFiles.get(i);
+                    file.setId(i + 1);
+                }
             }
             return true;
         }
