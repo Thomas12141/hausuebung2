@@ -48,10 +48,19 @@ public class MyFile {
         return name;
     }
 
+    /**
+     * ID wird gesetzt
+     * @param id
+     */
     private void setId(int id) {
         this.id = id;
     }
 
+    /**
+     * Empfaengt ID von Datei, die geloescht werden soll
+     * @param fileToDelete
+     * @return boolean Wert
+     */
     public static boolean Delete(int fileToDelete){
         if (fileToDelete<idCounter) {
             myFiles.remove(fileToDelete-1);
@@ -68,6 +77,10 @@ public class MyFile {
         return false;
     }
 
+    /**
+     * wandelt Datei in Byte um
+     * @return data Die Datei
+     */
     public byte[] getData() {
         return data;
     }
